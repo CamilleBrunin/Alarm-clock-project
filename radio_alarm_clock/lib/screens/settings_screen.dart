@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:radio_alarm_clock/constants.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({
     super.key,
     required this.useLightMode,
     required this.colorSelected,
@@ -17,10 +17,10 @@ class Settings extends StatefulWidget {
   final ColorSeed colorSelected;
 
   @override
-  State<Settings> createState() => _Settings();
+  State<SettingsScreen> createState() => _Settings();
 }
 
-class _Settings extends State<Settings> {
+class _Settings extends State<SettingsScreen> {
   // Other
   bool light1 = false;
   bool light2 = true;
