@@ -39,7 +39,18 @@ class _Clockcreen extends State<Clockcreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return Center(
+    return Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Theme.of(context).colorScheme.primaryContainer,
+            Theme.of(context).colorScheme.tertiaryContainer,
+          ],
+        ),
+      ),
       child: Text(
         formattedTime,
         textAlign: TextAlign.center,

@@ -85,26 +85,39 @@ class _AlarmScreen extends State<AlarmScreen> {
       Timer.run(_runCommand);
       alreadyRang = true;
     }
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _alarmTime != null
-            ? Text('Alarm set to: ${_alarmTime!.format(context)}')
-            : const Text('No alarm'),
-        const Divider(),
-        TextButton(
-          onPressed: _presentTimePicker,
-          child: const Text('CONFIGURE ALARM'),
+    return Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Theme.of(context).colorScheme.primaryContainer,
+            Theme.of(context).colorScheme.tertiaryContainer,
+          ],
         ),
-        TextButton(
-          onPressed: () => onAlarmTrig(context),
-          child: const Text('SHOW DIALOG'),
-        ),
-        TextButton(
-          onPressed: _runCommand,
-          child: const Text("PLAY MUSIC"),
-        ),
-      ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _alarmTime != null
+              ? Text('Alarm set to: ${_alarmTime!.format(context)}')
+              : const Text('No alarm'),
+          const Divider(),
+          TextButton(
+            onPressed: _presentTimePicker,
+            child: const Text('CONFIGURE ALARM'),
+          ),
+          TextButton(
+            onPressed: () => onAlarmTrig(context),
+            child: const Text('SHOW DIALOG'),
+          ),
+          TextButton(
+            onPressed: _runCommand,
+            child: const Text("PLAY MUSIC"),
+          ),
+        ],
+      ),
     );
   }
 }
