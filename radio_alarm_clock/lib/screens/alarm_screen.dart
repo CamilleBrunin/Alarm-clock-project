@@ -65,6 +65,7 @@ class _AlarmScreen extends State<AlarmScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Opening Spotify'),
+          content: Image.asset('assets/images/capy.png'),
           actions: <Widget>[
             TextButton(
               child: const Text('OK'),
