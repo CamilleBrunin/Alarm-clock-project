@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:radio_alarm_clock/constants.dart';
 import 'package:radio_alarm_clock/homepage.dart';
 
 void main() {
+  // Lock screen orientation to landscape mode
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeLeft,
+  ]);
   runApp(const App());
 }
 
@@ -41,8 +47,6 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Material 3',
       themeMode: themeMode,
       theme: ThemeData(
         colorSchemeSeed: colorSelected.color,
