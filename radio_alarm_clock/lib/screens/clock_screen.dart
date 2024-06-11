@@ -54,10 +54,10 @@ class _Clockcreen extends State<Clockcreen> {
       child: Text(
         formattedTime,
         textAlign: TextAlign.center,
-        style: GoogleFonts.comfortaa(
-          textStyle: Theme.of(context).textTheme.displayLarge,
+        style: TextStyle(
           fontSize: width / 4,
           fontWeight: FontWeight.w700,
+          fontFamily: "comfortaa",
         ),
       ),
     );
