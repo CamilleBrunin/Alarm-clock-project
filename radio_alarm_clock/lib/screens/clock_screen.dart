@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
-import 'package:google_fonts/google_fonts.dart';
 
 final formatter = DateFormat('kk:mm');
 
