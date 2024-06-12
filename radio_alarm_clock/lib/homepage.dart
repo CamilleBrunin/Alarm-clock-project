@@ -41,7 +41,7 @@ class _HomePage extends State<HomePage> {
     return Scaffold(
       body: PageView(
         children: [
-          Clockcreen(),
+          ClockScreen(),
           AlarmScreen(),
           // clockWidget(),
           SettingsScreen(

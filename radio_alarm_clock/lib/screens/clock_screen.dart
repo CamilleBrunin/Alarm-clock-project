@@ -4,14 +4,14 @@ import 'dart:async';
 
 final formatter = DateFormat('kk:mm');
 
-class Clockcreen extends StatefulWidget {
-  const Clockcreen({super.key});
+class ClockScreen extends StatefulWidget {
+  const ClockScreen({super.key});
 
   @override
-  State<Clockcreen> createState() => _Clockcreen();
+  State<ClockScreen> createState() => _ClockScreen();
 }
 
-class _Clockcreen extends State<Clockcreen> {
+class _ClockScreen extends State<ClockScreen> {
   var formattedTime = formatter.format(DateTime.now());
   late Timer timer;
 
