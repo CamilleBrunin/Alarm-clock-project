@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'dart:async';
 
-final formatter = DateFormat('kk:mm');
+import 'package:radio_alarm_clock/constants.dart';
 
 class ClockScreen extends StatefulWidget {
   const ClockScreen({super.key});

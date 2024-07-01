@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 enum ColorSeed {
   baseColor('M3 Baseline', Color(0xff6750a4)),
@@ -18,3 +19,5 @@ enum ColorSeed {
 
 const double titleSmall = 17;
 const double headlineSmall = 23;
+
+final formatter = DateFormat('kk:mm');

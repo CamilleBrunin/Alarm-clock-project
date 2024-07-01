@@ -2,6 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:process_run/shell.dart';
+import 'package:radio_alarm_clock/models/alarm.dart';
+import 'package:radio_alarm_clock/screens/new_alarm.dart';
+import 'package:radio_alarm_clock/utils/alarm_preferences.dart';
+import 'package:radio_alarm_clock/widgets/alarm_list.dart';
 
 class AlarmScreen extends StatefulWidget {
   const AlarmScreen({super.key});
@@ -11,25 +15,27 @@ class AlarmScreen extends StatefulWidget {
 }
 
 class _AlarmScreen extends State<AlarmScreen> {
-  TimeOfDay? _alarmTime;
   late Timer timer;
   bool rings = false;
   bool alreadyRang = false;
+  List<Alarm> _registeredAlarms = [];
 
   @override
   void initState() {
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       var currentTime = TimeOfDay.now();
-      if (_alarmTime == currentTime) {
-        setState(() {
-          rings = true;
-        });
-      } else {
-        setState(() {
-          rings = false;
-        });
-      }
+      // if (_alarmTime == currentTime) {
+      //   setState(() {
+      //     rings = true;
+      //   });
+      // } else {
+      //   setState(() {
+      //     rings = false;
+      //   });
+      // }
     });
+
+    _registeredAlarms = AlarmPreferences.getAlarms();
     super.initState();
   }
 
@@ -43,19 +49,6 @@ class _AlarmScreen extends State<AlarmScreen> {
   Future _runCommand() async {
     var shell = Shell();
     await shell.run('./assets/scripts/script.sh');
-  }
-
-  void _presentTimePicker() async {
-    // 'await' is telling flutter to wait for the Future value before storing it in the variable
-    final pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-
-    setState(() {
-      _alarmTime = pickedTime;
-      alreadyRang = false;
-    });
   }
 
   Future<void> onAlarmTrig(BuildContext context) async {
@@ -79,6 +72,49 @@ class _AlarmScreen extends State<AlarmScreen> {
     );
   }
 
+  Future _openAddAlarmOverlay(
+      {bool isNewAlarm = true, Alarm? editedAlarm}) async {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: CircleBorder(eccentricity: 0.8),
+        builder: (ctx) => isNewAlarm
+            ? NewAlarm(
+                onAddAlarm: (alarm) => {
+                  _addAlarm(alarm),
+                },
+              )
+            : NewAlarm(
+                onAddAlarm: (alarm) => {
+                  _replaceAlarm(alarm),
+                },
+                editedAlarm: editedAlarm!,
+              ));
+  }
+
+  void _removeAlarm(Alarm alarm) {
+    _registeredAlarms.removeWhere((element) => element.id == alarm.id);
+    AlarmPreferences.remove(alarm.id);
+    setState(() {});
+  }
+
+  void _editAlarm(Alarm alarm) async {
+    await _openAddAlarmOverlay(isNewAlarm: false, editedAlarm: alarm);
+    setState(() {});
+  }
+
+  void _addAlarm(Alarm newAlarm) {
+    _registeredAlarms.add(newAlarm);
+    setState(() {});
+  }
+
+  void _replaceAlarm(Alarm newAlarm) {
+    final index =
+        _registeredAlarms.indexWhere((element) => element.id == newAlarm.id);
+    _registeredAlarms[index] = newAlarm;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     if (rings && !alreadyRang) {
@@ -86,38 +122,50 @@ class _AlarmScreen extends State<AlarmScreen> {
       Timer.run(_runCommand);
       alreadyRang = true;
     }
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Theme.of(context).colorScheme.primaryContainer,
-            Theme.of(context).colorScheme.tertiaryContainer,
-          ],
+
+    Widget mainContent = const Text(
+      'No alarm set',
+      style: const TextStyle(
+        fontSize: 40,
+        fontFamily: "comfortaa",
+        fontWeight: FontWeight.w700,
+      ),
+    );
+
+    if (_registeredAlarms.isNotEmpty) {
+      mainContent = AlarmList(
+        alarms: _registeredAlarms,
+        onRemoveAlarm: _removeAlarm,
+        onEditAlarm: _editAlarm,
+      );
+    }
+
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Open New Alarm Screen
+          _openAddAlarmOverlay();
+        },
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.onTertiary,
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _alarmTime != null
-              ? Text('Alarm set to: ${_alarmTime!.format(context)}')
-              : const Text('No alarm'),
-          const Divider(),
-          TextButton(
-            onPressed: _presentTimePicker,
-            child: const Text('CONFIGURE ALARM'),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Theme.of(context).colorScheme.primaryContainer,
+              Theme.of(context).colorScheme.tertiaryContainer,
+            ],
           ),
-          TextButton(
-            onPressed: () => onAlarmTrig(context),
-            child: const Text('SHOW DIALOG'),
-          ),
-          TextButton(
-            onPressed: _runCommand,
-            child: const Text("PLAY MUSIC"),
-          ),
-        ],
+        ),
+        child: mainContent,
       ),
     );
   }

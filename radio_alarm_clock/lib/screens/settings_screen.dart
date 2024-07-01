@@ -68,7 +68,9 @@ class _Settings extends State<SettingsScreen> {
             style: TextStyle(
               fontSize: titleSmall,
             )),
-        const SizedBox(width: 10,),
+        const SizedBox(
+          width: 10,
+        ),
         Switch(
             value: widget.useLightMode,
             onChanged: (value) {
@@ -124,13 +126,15 @@ class _Settings extends State<SettingsScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          switches(),
-          const Divider(),
+          // switches(),
           const Text('Appearance',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: headlineSmall,
               )),
+          Divider(
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
           _lightMode(),
           _colorSeed(),
         ],

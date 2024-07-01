@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:radio_alarm_clock/constants.dart';
 import 'package:radio_alarm_clock/homepage.dart';
+import 'package:radio_alarm_clock/utils/alarm_preferences.dart';
 
-void main() {
-  // Lock screen orientation to landscape mode
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Lock screen orientation to landscape mode
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
   ]);
+
+  // Init AlarmSimplePreferences
+  await AlarmPreferences.init();
+
   runApp(const App());
 }
 
