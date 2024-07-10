@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinner_time_picker/flutter_spinner_time_picker.dart';
 import 'package:radio_alarm_clock/constants.dart';
 import 'package:radio_alarm_clock/models/alarm.dart';
 import 'package:radio_alarm_clock/utils/alarm_preferences.dart';
@@ -42,10 +43,16 @@ class _NewAlarm extends State<NewAlarm> {
 
   // Methods
   void _presentTimePicker() async {
+    final maxWidth = MediaQuery.of(context).size.width;
+    final maxHeight = MediaQuery.of(context).size.height;
     // 'await' is telling flutter to wait for the Future value before storing it in the variable
-    final pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
+    final pickedTime = await showSpinnerTimePicker(
+      context,
+      initTime: TimeOfDay.now(),
+      height: maxHeight / 2.5,
+      width: maxWidth / 3,
+      barrierDismissible: false,
+      spinnerHeight: maxHeight / 3,
     );
 
     setState(() {
