@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:radio_alarm_clock/constants.dart';
+import 'package:radio_alarm_clock/widgets/background.dart';
 
 class ClockScreen extends StatefulWidget {
   const ClockScreen({super.key});
@@ -34,30 +35,23 @@ class _ClockScreen extends State<ClockScreen> {
     super.dispose();
   }
 
+  Widget timeWidget() {
+    final width = MediaQuery.of(context).size.width;
+    return Text(
+      formattedTime,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+          fontSize: width / 4,
+          fontWeight: FontWeight.w700,
+          fontFamily: "comfortaa",
+          color: Theme.of(context).colorScheme.onPrimaryContainer),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Theme.of(context).colorScheme.primaryContainer,
-            Theme.of(context).colorScheme.tertiaryContainer,
-          ],
-        ),
-      ),
-      child: Text(
-        formattedTime,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            fontSize: width / 4,
-            fontWeight: FontWeight.w700,
-            fontFamily: "comfortaa",
-            color: Theme.of(context).colorScheme.onPrimaryContainer),
-      ),
+    return Background(
+      content: timeWidget(),
     );
   }
 }

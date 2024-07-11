@@ -3,6 +3,7 @@ import 'package:flutter_spinner_time_picker/flutter_spinner_time_picker.dart';
 import 'package:radio_alarm_clock/constants.dart';
 import 'package:radio_alarm_clock/models/alarm.dart';
 import 'package:radio_alarm_clock/utils/alarm_preferences.dart';
+import 'package:radio_alarm_clock/widgets/background.dart';
 import 'package:radio_alarm_clock/widgets/days_buttons.dart';
 import 'package:uuid/uuid.dart';
 
@@ -136,31 +137,22 @@ class _NewAlarm extends State<NewAlarm> {
         }),
       );
 
+  Widget newAlarm() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        buildTimePicker(),
+        buildDays(),
+        const SizedBox(
+          height: 20,
+        ),
+        buildButton(),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Theme.of(context).colorScheme.primaryContainer,
-            Theme.of(context).colorScheme.tertiaryContainer,
-          ],
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildTimePicker(),
-          buildDays(),
-          const SizedBox(
-            height: 20,
-          ),
-          buildButton(),
-        ],
-      ),
-    );
+    return Background(content: newAlarm());
   }
 }

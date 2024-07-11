@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:radio_alarm_clock/constants.dart';
+import 'package:radio_alarm_clock/widgets/background.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -107,21 +108,9 @@ class _Settings extends State<SettingsScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget settings() {
+    return Padding(
       padding: const EdgeInsets.all(8.0),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Theme.of(context).colorScheme.primaryContainer,
-            Theme.of(context).colorScheme.tertiaryContainer,
-          ],
-        ),
-      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,5 +129,10 @@ class _Settings extends State<SettingsScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Background(content: settings());
   }
 }

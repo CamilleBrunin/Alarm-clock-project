@@ -6,6 +6,7 @@ import 'package:radio_alarm_clock/models/alarm.dart';
 import 'package:radio_alarm_clock/screens/new_alarm.dart';
 import 'package:radio_alarm_clock/utils/alarm_preferences.dart';
 import 'package:radio_alarm_clock/widgets/alarm_list.dart';
+import 'package:radio_alarm_clock/widgets/background.dart';
 
 class AlarmScreen extends StatefulWidget {
   const AlarmScreen({super.key});
@@ -77,7 +78,8 @@ class _AlarmScreen extends State<AlarmScreen> {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        shape: CircleBorder(eccentricity: 0.8),
+        enableDrag: false,
+        shape: const LinearBorder(),
         builder: (ctx) => isNewAlarm
             ? NewAlarm(
                 onAddAlarm: (alarm) => {
@@ -153,19 +155,8 @@ class _AlarmScreen extends State<AlarmScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Theme.of(context).colorScheme.primaryContainer,
-              Theme.of(context).colorScheme.tertiaryContainer,
-            ],
-          ),
-        ),
-        child: mainContent,
+      body: Background(
+        content: mainContent,
       ),
     );
   }
