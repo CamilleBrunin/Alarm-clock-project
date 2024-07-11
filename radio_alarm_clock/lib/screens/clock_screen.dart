@@ -53,10 +53,10 @@ class _ClockScreen extends State<ClockScreen> {
         formattedTime,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: width / 4,
-          fontWeight: FontWeight.w700,
-          fontFamily: "comfortaa",
-        ),
+            fontSize: width / 4,
+            fontWeight: FontWeight.w700,
+            fontFamily: "comfortaa",
+            color: Theme.of(context).colorScheme.onPrimaryContainer),
       ),
     );
   }

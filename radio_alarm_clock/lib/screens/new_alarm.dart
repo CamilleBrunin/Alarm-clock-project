@@ -49,10 +49,24 @@ class _NewAlarm extends State<NewAlarm> {
     final pickedTime = await showSpinnerTimePicker(
       context,
       initTime: TimeOfDay.now(),
-      height: maxHeight / 2.5,
-      width: maxWidth / 3,
+      height: maxHeight / 2,
+      width: maxWidth / 2,
+      is24HourFormat: true,
+      title: '',
       barrierDismissible: false,
-      spinnerHeight: maxHeight / 3,
+      spinnerHeight: maxHeight,
+      digitHeight: maxHeight / 5,
+      spinnerWidth: maxWidth / 5,
+      contentPadding: const EdgeInsets.all(5),
+      selectedTextStyle: TextStyle(
+        fontSize: 70,
+        fontWeight: FontWeight.bold,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
+      nonSelectedTextStyle: TextStyle(
+        fontSize: 40,
+        color: Theme.of(context).colorScheme.primary,
+      ),
     );
 
     setState(() {
